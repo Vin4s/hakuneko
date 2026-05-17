@@ -7,20 +7,7 @@ export default class MangaLivre extends Leitor {
         super.id = 'mangalivre';
         super.label = 'Manga Livre';
         this.tags = [ 'manga', 'webtoon', 'portuguese' ];
-        this.url = 'https://mangalivre.net';
-    }
-
-    async _getPages(chapter) {
-        const uri = new URL(chapter.id, this.url);
-        const request = new Request(uri, this.requestOptions);
-        const dom = await this.fetchDOM(request);
-        const script = dom.querySelector('script[src*="token="]');
-        const source = new URL(script.src);
-        const release = source.searchParams.get('id_release');
-        const token = source.searchParams.get('token');
-        const ivRegEx = /new\s+Reader\s*\((?:\s*\w+\s*,){3}\s*"([a-fA-F0-9]+)"\s*\)/;
-        const iv = [...dom.querySelectorAll('script')].find(script => ivRegEx.test(script.text)).text.match(ivRegEx)[1];
-        return this._getImageLinks(release, this._key(token, iv, release));
+        this.url = 'https://mangalivre.blog';
     }
 
     _key(e, t, i) {
